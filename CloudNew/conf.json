@@ -1,0 +1,57 @@
+{
+	"CSP": {
+		"Username": "RainMaker",
+		"Password": "rainmaker"
+	},
+	"IPAddresses": {
+		"CSP": "83.17.0.0/16",
+		"Dashboard": "83.17.1.1",
+		"Database": "83.17.1.2",
+		"LoadBalancer": "83.17.1.3",
+		"DatabaseAccessController": "83.17.1.4",
+		"HealthMonitor": "83.17.1.5"
+	},
+	"Ports": {
+		"Dashboard": {
+			"AppPort": 80,
+			"ContainerPort": 9001
+		},
+		"Database": {
+			"AppPort": 3306,
+			"ContainerPort": 9002
+		},
+		"LoadBalancer": {
+			"AppPort": 80,
+			"ContainerPort": 9003
+		},
+		"DatabaseAccessController": {
+			"AppPort": 80,
+			"ContainerPort": 9004
+		},
+		"HealthMonitor": {
+			"AppPort": 80,
+			"ContainerPort": 9005
+		},
+		"Host": {
+			"AppPort": 80,
+			"StartingContainerPort": 9100
+		},
+		"WebRole": {
+			"AppPort": 80,
+			"StartingContainerPort": 9200
+		},
+		"WorkerRole": {
+			"AppPort": 80,
+			"StartingContainerPort": 9800
+		}
+	},
+	"Database": {
+		"DatabaseRootPassword": "root",
+		"CSPDatabaseName": "CSPDb",
+		"CSPDatabaseUsername": "rainmaker",
+		"CSPDatabasePassword": "rainmaker",
+		"TenantDatabaseName": "TenantDb",
+		"TenantDatabaseUsername": "tenant",
+		"TenantDatabasePassword": "tenant"
+	}
+}

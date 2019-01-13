@@ -1,0 +1,71 @@
+tenant -> the BookKart service provider
+user -> end user of the tenant's service.
+us -> the cloud service provider
+host -> the linode server on which the containers reside.
+web-role -> a server that sits at the user front.
+worker-role -> a server that performs background (persistant) tasks, without user interaction.
+conductor -> an intermediary between the database and other servers: A database front.
+load-balancer -> distributes load (number of user connections) between the available web-roles.
+ticket-granting-service -> a server that provides one-time authentication, and assigns the privilege levels 	to new connections.
+
+host:
+	- frontend roles:
+		- gateway for communication, between the user and the containers.
+		- forwards each request from user to appropriate service, after parsing the request.
+		- forwards request to tgs_container to obtain a token, recieves it, and forwards it to the user.
+	- backend roles:
+		- creates all default containers.
+		- meta/default_data: file for - 
+			- load balancing container's endpoint
+			- token granting service container's endpoint
+			- conductor container's endpoint
+			- database container's endpoint
+		- wb_container_data: file for web roles container's endpoints
+		- wk_container_data: file for worker roles container's endpoints
+		- create tenant on database
+	- server(8080):
+		- for tenant(host.py):
+			- app route = /tenant/
+			- serves tenant GUI.
+			- enables tenant login, calls tgs -> return tenant token, along with tenant functions page.
+			- call appropriate container through functions page.
+				- database
+				- web/woker role creation details
+				- start/stop functionality for end_user.py
+				- start/stop functionality for worker_role
+		- for end-user(host.py):
+			- app route = /
+			- allocate a token, return token.
+			- loadbalance web_role, assign web_role -> port forward to web_role
+tgs_container (PORT: 9001):
+	- accesses database, to grant tokens for each user logged in.
+	- normal user token.
+	- privileged user token(tenant).
+lb_container (PORT: 9002):
+	- load balancer as a service: request assignment of web roles
+	- maintains a record of currently assigned loads to each container. (If new container is found, updates it)
+		- requests the host for the list of available containers offering the service.
+		- consults the record to arrive at the appropriate container.
+		- verifies liveness of the containers.
+		- selects the host with the least load, updates the records.
+		- returns the IP address to the host.
+wb_container (PORT: 9100 - 9199):
+	- web role container: hosts the website for normal user.
+	- implementation provided by tenant.
+	- contacts the cd_container, for any database calls.
+wk_container (PORT: 9200):
+	- performs background tasks, for the tenant's service.
+	- no interaction with the user(tenant's client).
+	- implmentation specified by tenant.
+	- accesses the database through the cd_container.
+cd_container (PORT: 9003):
+	- sanitizes the queries from users.
+	- validates the request based on the token.
+	- forwards request to db_container.
+	- get back data from db_container, forward to the appropriate web role.
+db_container (PORT: 3306):
+	- serves the db.
+
+To do:
+	- heartbeat for the loadbalancer
+	- add containers while live ??

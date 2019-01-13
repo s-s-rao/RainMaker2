@@ -1,0 +1,22 @@
+POST: /api/rollingaverage/node/1
+	REQUEST:
+	{
+		"1": 200,
+		"2": 10,
+		"3": 1.0
+	}
+	RESPONSE:
+	{
+		"status": "success",
+		"message": ""
+	}
+
+GET: /api/rollingaverage/node/1/sensor/1
+	RESPONSE:
+	{
+	    "data": {
+	        "nodeId": "1",
+	        "rollingAverage": 200,
+	        "sensorId": "1"
+	    }
+	}

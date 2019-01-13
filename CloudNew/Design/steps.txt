@@ -1,0 +1,15 @@
+host:
+	change ssh config
+	install node
+	install node-cmd
+	install nginx and configure
+	install docker.io
+	upload admin.js
+	upload end_user.js
+	upload make_containers.py
+	create load balancing container
+	create token granting service container
+	create conductor container
+	create database container
+	run admin.js
+	peace out yo

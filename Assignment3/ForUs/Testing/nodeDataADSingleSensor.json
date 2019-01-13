@@ -1,0 +1,14 @@
+{
+	"meta": {
+		"nodeName": "AnalogDevices",
+		"sensors": {
+			"1": "Temperature"
+		}
+	},
+	"sensorData": {
+		"1": {
+			"min": 130,
+			"max": 170
+		}
+	}
+}

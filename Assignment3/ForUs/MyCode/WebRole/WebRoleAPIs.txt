@@ -1,0 +1,80 @@
+POST: /api/meta
+	REQUEST:
+	{
+		"nodeName": "YourNodeNameHere",
+		"sensors": {
+			"1": "Temperature",
+			"2": "Humidity",
+			"3": "O2"
+		}
+	}
+	RESPONSE:
+	{
+	    "data": {
+	        "nodeId": "1",
+	        "nodeName": "YourNodeNameHere"
+	    },
+	    "status": "success"
+	}
+
+GET: /api/meta/node/1
+	RESPONSE:
+	{
+	    "data": {
+	        "nodeId": "1",
+	        "nodeName": "AnalogDevices",
+	        "sensors": {
+	            "1": "Temperature",
+	            "2": "Humidity",
+	            "3": "O2"
+	        }
+	    }
+	}
+
+GET: /api/meta/node/1/sensor/1
+	RESPONSE:
+	{
+	    "data": {
+	        "nodeId": "1",
+	        "nodeName": "AnalogDevices",
+	        "sensorId": "1",
+	        "sensorType": "Temperature"
+	    }
+	}
+
+POST: /api/data
+	REQUEST:
+	{
+		"nodeId": "1",
+		"sensorData": {
+			"1": 200,
+			"2": 10,
+			"3": 1.0
+		}
+	}
+	RESPONSE:
+	{
+	    "message": "",
+	    "status": "success"
+	}
+
+GET: /api/data/node/1/sensor/1/latest
+	RESPONSE:
+	{
+	    "data": {
+	        "dataValue": 200,
+	        "nodeId": "1",
+	        "sensorId": "1",
+	        "seqId": 1
+	    }
+	}
+
+GET: /api/rollingaverage/node/1/sensor/1
+	RESPONSE:
+	{
+	    "data": {
+	        "nodeId": "1",
+	        "rollingAverage": 200,
+	        "sensorId": "1"
+	    }
+	}
